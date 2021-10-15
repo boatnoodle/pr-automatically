@@ -1,10 +1,10 @@
 import { Probot } from "probot";
 
 export = (app: Probot) => {
-  app.on("pull_request.opened", async (context) => {
+  app.on(["issues.opened", "pull_request.opened"], async (context) => {
     const issueLabel = context.issue({
-      labels: ["bug"],
+      body: "thanks for react",
     });
-    await context.octokit.issues.addLabels(issueLabel);
+    await context.octokit.issues.createComment(issueLabel);
   });
 };
