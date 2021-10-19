@@ -3,12 +3,10 @@ import { Probot } from "probot";
 export = (app: Probot) => {
   app.on(["pull_request"], async (context) => {
     const action = context.payload.action;
-    const prTitle = context.payload.pull_request.title;
-    const isWIPTitle = prTitle.match(/WIP|[WIP]|WIP:/g);
     const isDraftPR = context.payload.pull_request.draft;
 
     if (action === "opened") {
-      if (isWIPTitle || isDraftPR) {
+      if (isDraftPR) {
         const issueComment = context.issue({
           body: "This pull request is in progress.",
         });
