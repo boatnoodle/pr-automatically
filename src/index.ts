@@ -29,11 +29,12 @@ export = (app: Probot) => {
         .listLabelsOnIssue(context.issue())
         .then((response) => response?.data?.[0]?.name);
 
-      await context.octokit.issues.deleteLabel(
-        context.issue({
-          name: targetDeleteLabel,
-        })
-      );
+      if (targetDeleteLabel)
+        await context.octokit.issues.deleteLabel(
+          context.issue({
+            name: targetDeleteLabel,
+          })
+        );
       await context.octokit.issues.addLabels(
         context.issue({
           labels: [":mag:  unreviewed"],
@@ -44,11 +45,12 @@ export = (app: Probot) => {
         .listLabelsOnIssue(context.issue())
         .then((response) => response?.data?.[0]?.name);
 
-      await context.octokit.issues.deleteLabel(
-        context.issue({
-          name: targetDeleteLabel,
-        })
-      );
+      if (targetDeleteLabel)
+        await context.octokit.issues.deleteLabel(
+          context.issue({
+            name: targetDeleteLabel,
+          })
+        );
       await context.octokit.issues.addLabels(
         context.issue({
           labels: [":mag:  review_requested"],
@@ -75,11 +77,12 @@ export = (app: Probot) => {
               .listLabelsOnIssue(context.issue())
               .then((response) => response?.data?.[0]?.name);
 
-            await context.octokit.issues.deleteLabel(
-              context.issue({
-                name: targetDeleteLabel,
-              })
-            );
+            if (targetDeleteLabel)
+              await context.octokit.issues.deleteLabel(
+                context.issue({
+                  name: targetDeleteLabel,
+                })
+              );
             await context.octokit.issues.addLabels(
               context.issue({
                 labels: [":ambulance:   changes_requested"],
@@ -98,12 +101,12 @@ export = (app: Probot) => {
         const targetDeleteLabel = await context.octokit.issues
           .listLabelsOnIssue(context.issue())
           .then((response) => response?.data?.[0]?.name);
-
-        await context.octokit.issues.deleteLabel(
-          context.issue({
-            name: targetDeleteLabel,
-          })
-        );
+        if (targetDeleteLabel)
+          await context.octokit.issues.deleteLabel(
+            context.issue({
+              name: targetDeleteLabel,
+            })
+          );
         if (amountApproval < 2) {
           await context.octokit.issues.addLabels(
             context.issue({
